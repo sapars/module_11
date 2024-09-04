@@ -3,7 +3,7 @@ import numpy as np
 
 
 # Чтение данных из файла эксель
-# 1 способ
+# 1 способ - необходимо установить openpyxl
 excel = pd.ExcelFile("module_11_1.xlsx")
 print(excel.sheet_names)
 df = []
