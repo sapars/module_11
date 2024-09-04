@@ -1,0 +1,106 @@
+import pandas as pd
+import numpy as np
+
+
+# Чтение данных из файла эксель
+# 1 способ
+excel = pd.ExcelFile("module_11_1.xlsx")
+print(excel.sheet_names)
+df = []
+for sheet in excel.sheet_names:
+    df.append(excel.parse(sheet))
+for i in df:
+    print(i)
+df = pd.concat(df)
+print(df)
+
+#  2 способ
+print('-----------------')
+print('2 способ')
+df = pd.read_excel("module_11_1.xlsx", sheet_name=None)
+for i in df:
+    print(df[i])
+    print('-----------------')
+print(df.keys())
+df = pd.concat(df.values())
+print(df)
+print('-----------------')
+print(df.index)
+print(df.columns)
+print(df.values)
+print('-----------------')
+
+print(df.describe())
+print('-----------------')
+print(df.T)
+print('-----------------')
+print(df.sort_index(axis=1, ascending=False))
+print('-----------------')
+
+# создание датафрейма с нуля
+print('-----------------')
+print('создание датафрейма с нуля')
+index = pd.date_range("1/1/2000", periods=8)
+s = pd.Series(np.random.randn(5), index=['a', 'b', 'c', 'd', 'e'])
+df = pd.DataFrame(np.random.randn(8, 3), index=index,
+                  columns=['A', 'B', 'C'])
+
+print(df)
+print('-----------------')
+print(df[:3])
+print('-----------------')
+print(df[3:7])
+print('-----------------')
+print(df['2000-01-03':'2000-01-07'])
+print('-----------------')
+print(df.loc['2000-01-03'])
+print('-----------------')
+print(df.loc[:, ['A', 'B']])
+print('-----------------')
+print(df.loc['2000-01-03':'2000-01-07', ['A', 'B']])
+print('-----------------')
+print(df.at['2000-01-03', 'A'])
+print('-----------------')
+print(df.iloc[3:5, 0:2])
+print('-----------------')
+print(df.iat[1, 1])
+print('-----------------')
+print(df[df.A > 0])
+print('-----------------')
+print(df[df > 0])
+print('-----------------')
+print(df.query('A > 0'))
+print('-----------------')
+print(df[(df.A > 0) & (df.B > 0)])
+print('-----------------')
+print(df[(df.A > 0) | (df.B > 0)])
+print('-----------------')
+print(df.isin([0, 1]))
+print('-----------------')
+print(df[df.A.isin([0, 1])])
+print('-----------------')
+
+print('-----------------')
+print(df[df.A.between(0, 1)])
+print('-----------------')
+print(df[df.A.isnull()])
+print('-----------------')
+print(df[df.A.notnull()])
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull()])
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull() & df.C.notnull()])
+print('-----------------')
+expr = 'df[df.A.notnull() & df.B.notnull() & df.C.notnull()].count()'
+print(f'{expr}:\n{eval(expr)}')
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull() & df.C.notnull()].sum())
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull() & df.C.notnull()].mean())
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull() & df.C.notnull()].std())
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull() & df.C.notnull()].min())
+print('-----------------')
+print(df[df.A.notnull() & df.B.notnull() & df.C.notnull()].max())
+
